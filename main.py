@@ -20,11 +20,16 @@ SIG -> Pin 18 (GPIO 24)
 
 '''
 
+# Imports
 import time
 import bme680
 
+# Temperature, Humidity, Pressure Sensor Setup
 sensor = bme680.BME680()
 sensor.set_humidity_oversample(bme680.OS_2X)
 sensor.set_pressure_oversample(bme680.OS_4X)
 sensor.set_temperature_oversample(bme680.OS_8X)
 sensor.set_filter(bme680.FILTER_SIZE_3)
+
+# Moisture Sensor Setup
+GPIO.setup(16, GPIO.OUT)
