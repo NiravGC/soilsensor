@@ -47,7 +47,7 @@ def logdata():
   with open('data/sensordata.csv', 'a', ) as file:
     writer = csv.writer(file)
     writer.writerow([now, temp, press, hum])
-  print("New data logged")
+  print('New data logged')
   pushdata()
 
 
@@ -75,10 +75,9 @@ def pushdata(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   parent = repo.get_git_commit(master_sha)
   commit = repo.create_git_commit(commit_message, tree, [parent])
   master_ref.edit(commit.sha)
-  print("Updated data pushed to GitHub")
+  print('Updated data pushed to GitHub')
 
 while True:
-  time.sleep(10)
+  print('Running test script, use CTRL+C to cancel')
   logdata()
-  
-  
+  time.sleep(10)
