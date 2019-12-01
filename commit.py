@@ -15,7 +15,7 @@ base_tree = repo.get_git_tree(master_sha)
 
 with open(file, 'rb') as input_file:
   data = input_file.read()
-element = InputGitTreeElement(entry, '100644', 'blob', data)
+element = InputGitTreeElement(file, '100644', 'blob', data)
 
 tree = repo.create_git_tree(element, base_tree)
 parent = repo.get_git_commit(master_sha)
