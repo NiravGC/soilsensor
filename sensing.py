@@ -38,6 +38,10 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 # Moisture Sensor Setup
 ''' tbc '''
 
+# DarkSkies API Setup
+location = ("51.476440", "-0.198166")
+secret = "43f8f3120c5aace69ec2a58b73313b38"
+
 # Test Readings
 def logdata():
   now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
