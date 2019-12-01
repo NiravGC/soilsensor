@@ -44,7 +44,7 @@ def logdata():
   temp = "{0:.1f} C".format(sensor.data.temperature)
   press = "{0:.1f} hPa".format(sensor.data.pressure)
   hum = "{0:.1f} %RH".format(sensor.data.humidity)
-  with open('data/sensordata.csv', 'a', newline='') as file:
+  with open('data/sensordata.csv', 'a', ) as file:
     writer = csv.writer(file)
     writer.writerow([now, temp, press, hum])
   print("New data logged")
