@@ -23,6 +23,7 @@ SIG -> Pin 18 (GPIO 24)
 # Imports
 import time
 import bme680
+import RPi.GPIO as GPIO
 
 # Temperature, Humidity, Pressure Sensor Setup
 sensor = bme680.BME680()
@@ -33,3 +34,7 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 
 # Moisture Sensor Setup
 GPIO.setup(16, GPIO.OUT)
+GPIO.setup(18, GPIO.IN)
+
+# Test Readings
+output = "{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH".format(sensor.data.temperature, sensor.data.pressure, sensor.data.humidity)
