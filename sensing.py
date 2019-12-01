@@ -41,6 +41,7 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 # Test Readings
 def logdata():
   now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+  sensor.get_sensor_data()
   temp = "{0:.1f} C".format(sensor.data.temperature)
   press = "{0:.1f} hPa".format(sensor.data.pressure)
   hum = "{0:.1f} %RH".format(sensor.data.humidity)
@@ -77,7 +78,8 @@ def pushdata(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   master_ref.edit(commit.sha)
   print('Updated data pushed to GitHub')
 
+  
+print('Running test script, use CTRL+C to cancel')
 while True:
-  print('Running test script, use CTRL+C to cancel')
   logdata()
   time.sleep(10)
