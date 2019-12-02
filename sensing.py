@@ -40,9 +40,9 @@ def logMoisture():
 # Sensor Readings
 def logSensor():
   sensor.get_sensor_data()
-  temp = "{:.1f} C".format(sensor.data.temperature)
-  press = "{:.2f} hPa".format(sensor.data.pressure)
-  hum = "{:.0f} %RH".format(sensor.data.humidity)
+  temp = "{:.1f}".format(sensor.data.temperature)
+  press = "{:.2f}".format(sensor.data.pressure)
+  hum = "{:.0f}".format(sensor.data.humidity)
   print('Sensor data logged')
   return([temp, press, hum])
  
@@ -51,12 +51,12 @@ def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.4764
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
     secret, location[0], location[1])
   weather = utils.call_api(apikey)
-  localTemp = weather['currently']['temperature']         # local temperature
-  localPress = weather['currently']['pressure']           # local pressure
-  localHum = weather['currently']['humidity']             # local humidity
-  precipProb = weather['currently']['precipProbability']  # precipitation probability
-  precipInt = weather['currently']['precipIntensity']     # precipitation intensity
-  cloud = weather['currently']['cloudCover']              # cloud cover
+  localTemp = weather['currently']['temperature']               # local temperature
+  localPress = weather['currently']['pressure']                 # local pressure
+  localHum = weather['currently']['humidity'] * 100             # local humidity
+  precipProb = weather['currently']['precipProbability'] * 100  # precipitation probability
+  precipInt = weather['currently']['precipIntensity']           # precipitation intensity
+  cloud = weather['currently']['cloudCover']                    # cloud cover
   print('Weather data logged')
   return([localTemp, localPress, localHum, precipProb, precipInt, cloud])
 
