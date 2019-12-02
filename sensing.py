@@ -105,7 +105,7 @@ while True:
     print('Logging data at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     writeData()
     pushData()
-    if currentHour = 23:
+    if currentHour == 23:
       targetHour = 0
     else:
       targetHour = currentHour + 1
