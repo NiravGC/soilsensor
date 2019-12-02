@@ -48,7 +48,7 @@ def logSensor():
   return([temp, press, hum])
  
 # DarkSkies API Readings
-def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.476440", "-0.198166")):
+def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = (["51.476440", "-0.198166"]):
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
     secret, location[0], location[1])
   weather = requests.get(apikey)
