@@ -97,7 +97,17 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   print('Data pushed to GitHub')
   
 print('Running test script, use CTRL+C to cancel')
+currentHour = datetime.now().strftime("%H")
+targetHour = currentHour
+
 while True:
-  writeData()
-  pushData()
-  time.sleep(30)
+  if currentHour == targetHour:
+    print('Logging data at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    writeData()
+    pushData()
+    if currentHour = 23:
+      targetHour = 0
+    else:
+      targetHour = currentHour + 1
+  else:
+    time.sleep(60)
