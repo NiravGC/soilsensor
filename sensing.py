@@ -22,6 +22,7 @@ SIG -> Pin 18 (GPIO 24)
 
 # Imports
 import time
+import utils
 import csv
 import bme680
 import RPi.GPIO as GPIO
@@ -37,34 +38,51 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 
 # Moisture Sensor Setup
 ''' tbc '''
+def logMoisture():
+  # tbc
 
-# DarkSkies API Setup
-location = ("51.476440", "-0.198166")
-secret = "43f8f3120c5aace69ec2a58b73313b38"
+# DarkSkies API Readings
+def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.476440", "-0.198166")):
+  apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
+    secret, location[0], location[1])
+  weather = utils.call_api(apikey)
+  localTemp = weather['currently']['temperature']         # local temperature
+  localPress = weather['currently']['pressure']           # local pressure
+  localHum = weather['currently']['humidity']             # local humidity
+  precipProb = weather['currently']['precipProbability']  # precipitation probability
+  precipInt = weather['currently']['precipIntensity']     # precipitation intensity
+  cloud = weather['currently']['cloudCover']              # cloud cover
+  print('Weather data logged')
+  return([localTemp, localPress, localHum, precipProb, precipInt, cloud])
 
-# Test Readings
-def logdata():
-  now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+# Sensor Readings
+def logSensor():
   sensor.get_sensor_data()
-  temp = "{0:.1f} C".format(sensor.data.temperature)
-  press = "{0:.1f} hPa".format(sensor.data.pressure)
-  hum = "{0:.1f} %RH".format(sensor.data.humidity)
-  with open('data/sensordata.csv', 'a', ) as file:
+  temp = "{:.1f} C".format(sensor.data.temperature)
+  press = "{:.2f} hPa".format(sensor.data.pressure)
+  hum = "{:.0f} %RH".format(sensor.data.humidity)
+  print('Sensor data logged')
+  return([temp, press, hum])
+
+def writeData():
+  now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+  sensorData = logSensor()
+  weatherData = logWeather()
+  allData = [now] + sensorData + weatherData
+  with open('data/allData.csv', 'a', ) as file:
     writer = csv.writer(file)
-    writer.writerow([now, temp, press, hum])
-  print('New data logged')
-  pushdata()
-
-
+    writer.writerow(allData)
+  
+  
 # GitHub push function from stackoverflow.com/questions/38594717
-def pushdata(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
+def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
 
   g = Github(token)
   repo = g.get_user().get_repo('soilsensor')
 
   file_list = [
     'data/sensordata.csv',
-    'data/notes.txt'
+    'data/notes.txt'        # hack file as code is designed to work with 2+ changes (test with this removed?)
   ]
   commit_message = 'AUTO: New data logged'
   master_ref = repo.get_git_ref('heads/master')
