@@ -77,8 +77,8 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   g = Github(token)
   repo = g.get_user().get_repo('soilsensor')
   file_list = [
-    'data/sensordata.csv'#,
-    #'data/notes.txt' hack file as code is designed to work with 2+ changes (test with this removed?)
+    'data/allData.csv'#,
+    #'data/dataHeadings.csv' hack file as code is designed to work with 2+ changes (test with this removed?)
   ]       
   commit_message = 'AUTO: New data logged'
   master_ref = repo.get_git_ref('heads/master')
