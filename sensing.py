@@ -37,6 +37,15 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 def logMoisture():
   # tbc
 
+# Sensor Readings
+def logSensor():
+  sensor.get_sensor_data()
+  temp = "{:.1f} C".format(sensor.data.temperature)
+  press = "{:.2f} hPa".format(sensor.data.pressure)
+  hum = "{:.0f} %RH".format(sensor.data.humidity)
+  print('Sensor data logged')
+  return([temp, press, hum])
+ 
 # DarkSkies API Readings
 def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.476440", "-0.198166")):
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
@@ -51,15 +60,6 @@ def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.4764
   print('Weather data logged')
   return([localTemp, localPress, localHum, precipProb, precipInt, cloud])
 
-# Sensor Readings
-def logSensor():
-  sensor.get_sensor_data()
-  temp = "{:.1f} C".format(sensor.data.temperature)
-  press = "{:.2f} hPa".format(sensor.data.pressure)
-  hum = "{:.0f} %RH".format(sensor.data.humidity)
-  print('Sensor data logged')
-  return([temp, press, hum])
-
 def writeData():
   now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
   sensorData = logSensor()
@@ -67,7 +67,8 @@ def writeData():
   allData = [now] + sensorData + weatherData
   with open('data/allData.csv', 'a', ) as file:
     writer = csv.writer(file)
-    writer.writerow(allData)  
+    writer.writerow(allData)
+  print('Data written to CSV file')
   
 # GitHub push function from stackoverflow.com/questions/38594717
 def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
@@ -90,8 +91,9 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   parent = repo.get_git_commit(master_sha)
   commit = repo.create_git_commit(commit_message, tree, [parent])
   master_ref.edit(commit.sha)
-  print('Updated data pushed to GitHub')
+  print('Data pushed to GitHub')
   
 print('Running test script, use CTRL+C to cancel')
-#while True:
-#  time.sleep(10)
+while True:
+  writeData()
+  sleep(30)
