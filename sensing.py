@@ -35,6 +35,7 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 # Moisture Sensor Setup
 ''' tbc '''
 def logMoisture():
+  return()
   # tbc
 
 # Sensor Readings
