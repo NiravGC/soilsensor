@@ -18,7 +18,7 @@ Soil Moisture Sensor -
 
 # Imports
 import time
-import utils
+import requests
 import csv
 import bme680
 import RPi.GPIO as GPIO
@@ -51,7 +51,7 @@ def logSensor():
 def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ("51.476440", "-0.198166")):
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
     secret, location[0], location[1])
-  weather = utils.call_api(apikey)
+  weather = requests.get(apikey)
   localTemp = weather['currently']['temperature']               # local temperature
   localPress = weather['currently']['pressure']                 # local pressure
   localHum = weather['currently']['humidity'] * 100             # local humidity
