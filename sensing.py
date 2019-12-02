@@ -109,6 +109,6 @@ while True:
       targetHour = 0
     else:
       targetHour = currentHour + 1
-    print('Next data log to be taken at ' + str(targetHour) + ':00')
+    print('Next data log to be taken at {}:00'.format(targetHour))
   else:
     time.sleep(60)
