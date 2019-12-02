@@ -1,8 +1,1 @@
-DateTime, Temperature, Pressure, Humidity
-01/12/2019 19:36:40,24.8 C,1027.8 hPa,38.3 %RH
-01/12/2019 19:36:54,24.8 C,1027.8 hPa,38.0 %RH
-01/12/2019 19:37:07,24.8 C,1027.8 hPa,37.9 %RH
-01/12/2019 19:37:21,24.8 C,1027.8 hPa,37.8 %RH
-01/12/2019 19:37:35,24.8 C,1027.8 hPa,37.9 %RH
-01/12/2019 19:37:42,24.7 C,1027.8 hPa,38.0 %RH
-01/12/2019 19:37:55,24.7 C,1027.8 hPa,38.3 %RH
+DateTime, Indoor Temperature (C), Indoor Pressure (hPa), Indoor Humidity (%), Outdoor Temperature (C), Outdoor Pressure (hPa), Outdoor Humidity (%), Precipitation Probability (%), Precipitation Intensity (mm/h), Cloud Cover
