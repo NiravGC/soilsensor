@@ -99,4 +99,5 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
 print('Running test script, use CTRL+C to cancel')
 while True:
   writeData()
-  sleep(30)
+  pushdata()
+  time.sleep(30)
