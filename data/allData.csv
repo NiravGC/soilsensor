@@ -1,3 +1,4 @@
+DateTime, Indoor Temperature (C), Indoor Pressure (hPa), Indoor Humidity (%), Outdoor Temperature (C), Outdoor Pressure (hPa), Outdoor Humidity (%), Precipitation Probability (%), Precipitation Intensity (mm/h), Cloud Cover
 03/12/2019 00:24:20,25.1,1032.08,46,2.63,1031.6,95.0,0,0,0.03
 03/12/2019 08:57:05,22.4,1030.18,42,4.67,1029,85.0,0,0,0.95
 03/12/2019 09:00:11,22.5,1030.14,42,4.68,1029,85.0,0,0,0.95
