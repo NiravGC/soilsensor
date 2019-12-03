@@ -7,13 +7,6 @@ This data will be combined with location-specific weather data to how the water 
 of a potted plan varies with conditions.
 
 * Pin Reference *
-BME680 Breakout - 
-PWR -> Pin 1 (3.3V)
-SDA -> Pin 3 (GPIO 2)
-SCL -> Pin 5 (GPIO 3)
-GND -> Pin 9 (Ground)
-
-Soil Moisture Sensor -
 '''
 
 # Imports
@@ -52,15 +45,22 @@ def logSensor():
 def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ["51.476440", "-0.198166"]):
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
     secret, location[0], location[1])
-  weather = requests.get(apikey).json()
-  localTemp = weather['currently']['temperature']               # local temperature
-  localPress = weather['currently']['pressure']                 # local pressure
-  localHum = weather['currently']['humidity'] * 100             # local humidity
-  precipProb = weather['currently']['precipProbability'] * 100  # precipitation probability
-  precipInt = weather['currently']['precipIntensity']           # precipitation intensity
-  cloud = weather['currently']['cloudCover']                    # cloud cover
-  print('Weather data logged')
-  return([localTemp, localPress, localHum, precipProb, precipInt, cloud])
+  try:
+    weather = requests.get(apikey).json()
+    localTemp = weather['currently']['temperature']               # local temperature
+    localPress = weather['currently']['pressure']                 # local pressure
+    localHum = weather['currently']['humidity'] * 100             # local humidity
+    precipProb = weather['currently']['precipProbability'] * 100  # precipitation probability
+    precipInt = weather['currently']['precipIntensity']           # precipitation intensity
+    cloud = weather['currently']['cloudCover']                    # cloud cover
+    print('Weather data logged')
+    return([localTemp, localPress, localHum, precipProb, precipInt, cloud])
+  except requests.exceptions.ConnectionError:
+    print('WARNING: Connection error - could not pull weather data')
+    return(['null', 'null', 'null', 'null', 'null', 'null'])
+  except:
+    print('WARNING: Unknown error')
+    return(['null', 'null', 'null', 'null', 'null', 'null'])
 
 def writeData():
   now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -77,8 +77,7 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   g = Github(token)
   repo = g.get_user().get_repo('soilsensor')
   file_list = [
-    'data/allData.csv'#,
-    #'data/dataHeadings.csv' hack file as code is designed to work with 2+ changes (test with this removed?)
+    'data/allData.csv'
   ]       
   commit_message = 'AUTO: New data logged'
   master_ref = repo.get_git_ref('heads/master')
@@ -95,21 +94,25 @@ def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   commit = repo.create_git_commit(commit_message, tree, [parent])
   master_ref.edit(commit.sha)
   print('Data pushed to GitHub')
-  
-print('Running test script, use CTRL+C to cancel')
+
+# Begin main function
+print('Starting data collection, use CTRL+C to cancel')
 currentHour = int(datetime.now().strftime("%H"))
 targetHour = currentHour
 
-while True:
+if __name__ == "__main__":
   currentHour = int(datetime.now().strftime("%H"))
   if currentHour == targetHour:
     print('Logging data at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     writeData()
-    pushData()
-    if currentHour == 23:
+    try:  
+      pushData()
+    except:
+      print('WARNING: Could not push data to Github. Storing locally until next data capture.')
+    if currentHour = 23:
       targetHour = 0
     else:
       targetHour = currentHour + 1
     print('Next data log to be taken at {}:00'.format(targetHour))
   else:
-    time.sleep(60)
+    time.sleep(120)
