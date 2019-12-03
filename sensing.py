@@ -109,7 +109,7 @@ if __name__ == "__main__":
       pushData()
     except:
       print('WARNING: Could not push data to Github. Storing locally until next data capture.')
-    if currentHour = 23:
+    if currentHour == 23:
       targetHour = 0
     else:
       targetHour = currentHour + 1
