@@ -100,7 +100,7 @@ print('Starting data collection, use CTRL+C to cancel')
 currentHour = int(datetime.now().strftime("%H"))
 targetHour = currentHour
 
-if __name__ == "__main__":
+while True:
   currentHour = int(datetime.now().strftime("%H"))
   if currentHour == targetHour:
     print('Logging data at ' + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
