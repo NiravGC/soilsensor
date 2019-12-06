@@ -15,6 +15,7 @@ import requests
 import csv
 import json
 import bme680
+import Adafruit_ADS1x15
 import RPi.GPIO as GPIO
 from github import Github, InputGitTreeElement
 from datetime import datetime
@@ -27,10 +28,20 @@ sensor.set_temperature_oversample(bme680.OS_8X)
 sensor.set_filter(bme680.FILTER_SIZE_3)
 
 # Moisture Sensor Setup
-''' tbc '''
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18,GPIO.OUT)
+adc = Adafruit_ADS1x15.ADS1115()
+
+# Soil Moisture Readings
 def logMoisture():
-  return()
-  # tbc
+  GPIO.output(18,GPIO.HIGH)
+  time.sleep(1)
+  moisture = adc.read_adc(0, gain=2/3)
+  GPIO.output(18,GPIO.LOW)
+  time.sleep(0.5)
+  print('Moisture data logged')
+  return(moisture)
 
 # Sensor Readings
 def logSensor():
@@ -66,28 +77,29 @@ def writeData():
   now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
   sensorData = logSensor()
   weatherData = logWeather()
-  allData = [now] + sensorData + weatherData
+  moistureData = logMoisture()
+  allData = [now] + [moistureData] + sensorData + weatherData
   with open('data/allData.csv', 'a', ) as file:
     writer = csv.writer(file)
     writer.writerow(allData)
   print('Data written to CSV file')
   
-# GitHub push function from stackoverflow.com/questions/38594717
+# GitHub push function from stackoverflow.com/questions/50071841/
 def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   g = Github(token)
-  repo = g.get_user().get_repo('soilsensor')
+  repo = g.get_user().get_repo('git-test')
   file_list = [
     'data/allData.csv'
-  ]       
-  commit_message = 'AUTO: New data logged'
+  ]
+  commit_message = 'AUTO: Datapoint added'
   master_ref = repo.get_git_ref('heads/master')
   master_sha = master_ref.object.sha
   base_tree = repo.get_git_tree(master_sha)
   element_list = list()
-  for entry in file_list:
-      with open(entry, 'rb') as input_file:
+  for i, entry in enumerate(file_list):
+      with open(entry) as input_file:
           data = input_file.read()
-      element = InputGitTreeElement(entry, '100644', 'blob', data)
+      element = InputGitTreeElement(file_list[i], '100644', 'blob', data)
       element_list.append(element)
   tree = repo.create_git_tree(element_list, base_tree)
   parent = repo.get_git_commit(master_sha)
