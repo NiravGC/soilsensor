@@ -1,1 +1,1 @@
-DateTime, Indoor Temperature (C), Indoor Pressure (hPa), Indoor Humidity (%), Outdoor Temperature (C), Outdoor Pressure (hPa), Outdoor Humidity (%), Precipitation Probability (%), Precipitation Intensity (mm/h), Cloud Cover
+DateTime, Moisture Value, Indoor Temperature (C), Indoor Pressure (hPa), Indoor Humidity (%), Outdoor Temperature (C), Outdoor Pressure (hPa), Outdoor Humidity (%), Precipitation Probability (%), Precipitation Intensity (mm/h), Cloud Cover
