@@ -87,7 +87,7 @@ def writeData():
 # GitHub push function from stackoverflow.com/questions/50071841/
 def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
   g = Github(token)
-  repo = g.get_user().get_repo('git-test')
+  repo = g.get_user().get_repo('soilsensor')
   file_list = [
     'data/allData.csv'
   ]
