@@ -53,7 +53,7 @@ def logSensor():
   return([temp, press, hum])
  
 # DarkSkies API Readings
-def logWeather(secret = "43f8f3120c5aace69ec2a58b73313b38", location = ["51.476440", "-0.198166"]):
+def logWeather(secret = "[REMOVED]", location = ["51.476440", "-0.198166"]):
   apikey = "https://api.darksky.net/forecast/{0}/{1},{2}?exclude=minutely,hourly,daily,alerts,flags&units=si".format(
     secret, location[0], location[1])
   try:
@@ -85,7 +85,7 @@ def writeData():
   print('Data written to CSV file')
   
 # GitHub push function from stackoverflow.com/questions/50071841/
-def pushData(token='e33eeb41a8a264e5c2e737db2383a37b494a32af'):
+def pushData(token='[REMOVED]'):
   g = Github(token)
   repo = g.get_user().get_repo('soilsensor')
   file_list = [
