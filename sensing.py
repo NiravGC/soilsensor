@@ -6,7 +6,7 @@ Soil moisture data is collected using a Sparkfun Soil Moisture Sensor
 This data will be combined with location-specific weather data to how the water consumption
 of a potted plan varies with conditions.
 
-* Pin Reference *
+NOTE: This script must be run in Python3
 '''
 
 # Imports
