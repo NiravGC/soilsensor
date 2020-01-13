@@ -11,4 +11,13 @@ In order to run the data collection script `sensing.py` the following libraries 
 > * bme680  
 > * adafruit-ads1x15  
 > * PyGithub  
+
 > **Note:** the `sensing.py` script must be run in **Python 3** to function properly.
+
+For data collection, only `sensing.py` need to be run - `historic.py` can be used to view historic DarkSkies weather data in the case that the CSV has failed to populate certain weather cells (occurs in cases where there is a connection issue during sampling).
+
+### Data Analysis
+All data analysis has been conducted within the `Data Analysis.ipynb` Jupyter Notebook file and can be downloaded or viewed directly within Github.
+
+### Interface
+A sample interface for viewing up-to-date sample data is available at https://niravgc.github.io/soilsensor/. Files used to display this interface are contained within the `/docs` folder. 
