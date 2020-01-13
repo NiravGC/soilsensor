@@ -16,6 +16,9 @@ In order to run the data collection script `sensing.py` the following libraries 
 
 For data collection, only `sensing.py` need to be run - `historic.py` can be used to view historic DarkSkies weather data in the case that the CSV has failed to populate certain weather cells (occurs in cases where there is a connection issue during sampling).
 
+### Data Files
+The file `allData.csv` contains all data that has been pushed by the `sensing.py` script. This includes some erroneous values that were added during setup and is included in the repository for completeness. The file `rawData.csv` is the rawData across the intended sample period and is the file used in data analysis and visualisation.
+
 ### Data Analysis
 All data analysis has been conducted within the `Data Analysis.ipynb` Jupyter Notebook file and can be downloaded or viewed directly within Github.
 
